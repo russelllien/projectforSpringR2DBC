@@ -1,36 +1,24 @@
-#R2DBC: Reactive Relational Database connectivity
+# 響應式資料庫存取實踐 (Project Spring R2DBC)
 
-特性         |        R2DBC             |      JPA/JDBC
---------------------------------------------------
-非同步       |  Yes(Mono/Flux)          |     No(傳統同步)
-資料庫連線    | reactive driver(R2DBC)   |    JDBC driver
+本專案專注於 **Reactive Programming (響應式編程)** 的實務應用，展示了如何使用 **Spring Data R2DBC** 構建高性能、異步且非阻塞的後端資料存取層。
 
+## 🚀 專案核心價值
 
+在面對高併發（High Concurrency）的企業級應用場景時，傳統的 JDBC/JPA 會因為「一請求一執行緒」的阻塞特性而耗盡系統資源。本專案透過 R2DBC 實作了以下優勢：
+1. **高性能併發**: 利用非阻塞 I/O，讓少量的執行緒即可處理大量的資料庫連線請求。
+2. **響應式串流**: 全程使用 **Project Reactor (Mono & Flux)**，展現對異步資料流的精準控管。
+3. **資源優化**: 顯著降低伺服器在等待資料庫回應時的 CPU 與記憶體閒置浪費。
 
-# Mono vs Flux
-Mono<T>: 單一資料 Mono<Book> findById(int id);
-Flux<T>: 多筆資料 Flux<Book> findAll();
+## 🛠 技術棧 (Tech Stack)
 
-# POM 要加入MariaDB 才能使用 MySQL
+* **核心框架**: Spring Boot 3.x (WebFlux)
+* **響應式資料庫驅動**: R2DBC (Reactive Relational Database Connectivity)
+* **資料庫**: MySQL / H2 (可配置)
+* **程式庫**: Project Reactor (Mono, Flux)
+* **依賴管理**: Maven
 
-1. @GetMapping("/books")
-URL: http://localhost:8080/api/books
-GET
+## 📂 核心架構解析
 
-2. @PostMapping("/books")
-URL: http://localhost:8080/api/books
-POST
-Body:
-{
-    "title": "I love Java ",
-    "description": "Insert data into database"
-
-}
-
-3. @DeleteMapping("/books")
-URL: http://localhost:8080/api/books
-DELETE
-
-4. @DeleteMapping("/books/{id}")
-URL: http://localhost:8080/api/books/{id}
-DELETE
+* **Reactive Repository**: 繼承 `R2dbcRepository`，實作非阻塞的 CRUD 操作。
+* **Functional Routing / Controller**: 展示如何透過 WebFlux 處理異步的 HTTP 請求與回應。
+* **Data Streaming**: 透過 `Flux` 實作資料的串流回傳，提升前端大量數據載入的體感速度。
